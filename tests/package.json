@@ -10,7 +10,8 @@
   "jest": {
     "setupFilesAfterEnv": [
       "./setup.js"
-    ]
+    ],
+    "testTimeout": 20000
   },
   "devDependencies": {
     "axios": "^0.21.1",
