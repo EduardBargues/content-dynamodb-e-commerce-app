@@ -56,7 +56,7 @@ describe(`GIVEN api is up and running`, () => {
       );
     });
 
-    it(`THEN should return CREATED-201`, async () => {
+    it(`THEN should return CREATED-201`, () => {
       expect(createUserResponse.status).toBe(201);
     });
 
@@ -69,7 +69,7 @@ describe(`GIVEN api is up and running`, () => {
         );
       });
 
-      it(`THEN should return OK-200`, async () => {
+      it(`THEN should return OK-200`, () => {
         expect(updateAddressesResponse.status).toBe(200);
       });
     });
@@ -80,8 +80,30 @@ describe(`GIVEN api is up and running`, () => {
         createOrderResponse = await axios.post(`${apiBaseUrl}/orders`, order);
       });
 
-      it(`THEN should return CREATED-201`, async () => {
+      it(`THEN should return CREATED-201`, () => {
         expect(createOrderResponse.status).toBe(201);
+      });
+
+      describe("WHEN calling GET - /customer/{customerName} to get most recent orders", () => {
+        let getCustomerResponse;
+        beforeAll(async () => {
+          getCustomerResponse = await axios.get(
+            `${apiBaseUrl}/customers/${customer.UserName}`
+          );
+        });
+
+        it(`THEN should return OK-200`, () => {
+          expect(getCustomerResponse.status).toBe(200);
+        });
+
+        it(`THEN should return 1 order`, () => {
+          expect(getCustomerResponse.data).toBeDefined();
+          expect(getCustomerResponse.data.UserName).toBe(customer.UserName);
+          expect(getCustomerResponse.data.Email).toBe(customer.Email);
+          expect(getCustomerResponse.data.Orders.length).toBe(1);
+          expect(getCustomerResponse.data.Orders[0].Amount).toBe(3.0);
+          expect(getCustomerResponse.data.Orders[0].NumberOfItems).toBe(2);
+        });
       });
     });
   });

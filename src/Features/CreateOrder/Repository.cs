@@ -65,8 +65,8 @@ namespace CreateOrder
             item2Put.Add(ORDER_ID_ATTRIBUTE_NAME, new AttributeValue(orderId));
             item2Put.Add(CREATED_AT_ATTRIBUTE_NAME, new AttributeValue(nowAsText));
             item2Put.Add(STATUS_ATTRIBUTE_NAME, new AttributeValue("ACCEPTED"));
-            item2Put.Add(AMOUNT_ATTRIBUTE_NAME, new AttributeValue($"{order.Items.Sum(item => item.Price)}"));
-            item2Put.Add(NUMBER_ITEMS_ATTRIBUTE_NAME, new AttributeValue($"{order.Items.Count()}"));
+            item2Put.Add(AMOUNT_ATTRIBUTE_NAME, new AttributeValue() { N = $"{order.Items.Sum(item => item.Price)}" });
+            item2Put.Add(NUMBER_ITEMS_ATTRIBUTE_NAME, new AttributeValue() { N = $"{order.Items.Count()}" });
 
             item2Put.Add(GSI_1_PK, new AttributeValue($"{ORDER_PREFIX}{orderId}"));
             item2Put.Add(GSI_1_SK, new AttributeValue($"{ORDER_PREFIX}{orderId}"));
