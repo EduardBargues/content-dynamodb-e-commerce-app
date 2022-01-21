@@ -1,7 +1,7 @@
 set -e
 WORKING_FOLDER=$(pwd)
 
-FEATURES=('CreateCustomer' 'UpdateCustomerAddresses' 'CreateOrder' 'GetCustomerWithRecentOrders')
+FEATURES=('CreateCustomer' 'UpdateCustomerAddresses' 'CreateOrder' 'GetCustomerWithRecentOrders' 'GetOrder')
 for feature in "${FEATURES[@]}"
 do
     echo ""

@@ -42,7 +42,7 @@ namespace CreateOrder
         public async Task<string> CreateOrder(Order order)
         {
             var nowAsText = DateTime.UtcNow.ToString("s");
-            var orderId = $"{order.UserName}<>{nowAsText}";
+            var orderId = $"{order.UserName}--{nowAsText}";
 
             var requests = order.Items
                 .Select((orderItem, index) => GetOrderItemWriteRequest(index, orderItem, orderId))

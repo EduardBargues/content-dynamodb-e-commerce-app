@@ -84,7 +84,11 @@ describe(`GIVEN api is up and running`, () => {
         expect(createOrderResponse.status).toBe(201);
       });
 
-      describe("WHEN calling GET - /customer/{customerName} to get most recent orders", () => {
+      it(`THEN should return orderId`, () => {
+        expect(createOrderResponse.data.OrderId).toBeDefined();
+      });
+
+      describe("WHEN calling GET - /customers/{customerName} to get most recent orders", () => {
         let getCustomerResponse;
         beforeAll(async () => {
           getCustomerResponse = await axios.get(
@@ -103,6 +107,24 @@ describe(`GIVEN api is up and running`, () => {
           expect(getCustomerResponse.data.Orders.length).toBe(1);
           expect(getCustomerResponse.data.Orders[0].Amount).toBe(3.0);
           expect(getCustomerResponse.data.Orders[0].NumberOfItems).toBe(2);
+        });
+      });
+
+      describe("WHEN calling GET - /orders/{orderId} to get the order and items", () => {
+        let getOrderResponse;
+        beforeAll(async () => {
+          getOrderResponse = await axios.get(
+            `${apiBaseUrl}/orders/${createOrderResponse.data.OrderId}`
+          );
+        });
+
+        it(`THEN should return OK-200`, () => {
+          expect(getOrderResponse.status).toBe(200);
+        });
+
+        it(`THEN should return the order`, () => {
+          expect(getOrderResponse.data.Status).toBe("ACCEPTED");
+          expect(getOrderResponse.data.Items.length).toBe(2);
         });
       });
     });
