@@ -6,9 +6,7 @@ resource "aws_api_gateway_rest_api" "api" {
 }
 resource "aws_api_gateway_deployment" "api" {
   depends_on = [
-    aws_api_gateway_integration.create_customer,
-    aws_api_gateway_integration.update_customer_addresses,
-    aws_api_gateway_integration.create_order,
+    module.apigw_integrations
   ]
   rest_api_id = aws_api_gateway_rest_api.api.id
   triggers = {
